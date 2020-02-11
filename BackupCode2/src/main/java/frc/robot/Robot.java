@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
   // Intake Side 2
   public Spark m_IntakeSide2 = new Spark(5);
   // Compressor
-  public Compressor compressor = new Compressor();
+  public Compressor Compressor = new Compressor();
   // Double Solenoid
   public DoubleSolenoid Intake = new DoubleSolenoid(0, 1);
   public DoubleSolenoid Intake2 = new DoubleSolenoid(2, 3);
@@ -76,7 +76,7 @@ public class Robot extends TimedRobot {
     _leftSlave.setInverted(InvertType.FollowMaster);
     _rightSlave.setInverted(InvertType.FollowMaster);
     // start Compressor
-    compressor.start();
+    Compressor.start();
   
   }
 
