@@ -47,6 +47,7 @@ public class Robot extends TimedRobot {
   public Compressor compressor = new Compressor();
   // Double Solenoid
   public DoubleSolenoid Intake = new DoubleSolenoid(0, 1);
+  public DoubleSolenoid Intake2 = new DoubleSolenoid(2, 3);
   // Drivetrain via Master Controllers
   DifferentialDrive _drive = new DifferentialDrive(_frontleftMotor, _frontrightMotor);
   // Joystick for Drive
@@ -184,6 +185,11 @@ public class Robot extends TimedRobot {
       Intake.set(Value.kReverse);
     } else {
       Intake.set(Value.kForward);
+    }
+    if (_joy1.getRawButton(4)) {
+      Intake2.set(Value.kReverse);
+    } else {
+      Intake2.set(Value.kForward);
     }
   }
 
