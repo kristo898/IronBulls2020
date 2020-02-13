@@ -191,6 +191,12 @@ public class Robot extends TimedRobot {
     } else {
       Intake2.set(Value.kForward);
     }
+    /*Shooter Pnuematics*/
+    if (_joy1.getRawButton(0)) {
+      Shooter.set(Value.kReverse);
+    } else {
+      Shooter.set(Value.kForward);
+    }
   }
 
   /**
