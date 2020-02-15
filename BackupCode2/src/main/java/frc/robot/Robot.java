@@ -9,7 +9,8 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.*;
-
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -34,8 +35,10 @@ public class Robot extends TimedRobot {
   WPI_VictorSPX _leftSlave = new WPI_VictorSPX(5);
   WPI_VictorSPX _rightSlave = new WPI_VictorSPX(7);
   // Shooter Controllers
-  public Spark m_ShooterMotor1 = new Spark(0);
-  public Spark m_ShooterMotor2 = new Spark(1);
+  private static final int leftDeviceID = 1;
+  private static final int rightDeviceID = 2;
+  private CANSparkMax m_ShooterMotor1;
+  private CANSparkMax m_ShooterMotor2;
   // Feeder Controllers
   public Spark m_Feeder1 = new Spark(2);
   public Spark m_Feeder2 = new Spark(3);
@@ -44,10 +47,11 @@ public class Robot extends TimedRobot {
   // Intake Side 2
   public Spark m_IntakeSide2 = new Spark(5);
   // Compressor
-  public Compressor Compressor = new Compressor();
+  public Compressor compressor = new Compressor();
   // Double Solenoid
   public DoubleSolenoid Intake = new DoubleSolenoid(0, 1);
   public DoubleSolenoid Intake2 = new DoubleSolenoid(2, 3);
+
   // Drivetrain via Master Controllers
   DifferentialDrive _drive = new DifferentialDrive(_frontleftMotor, _frontrightMotor);
   // Joystick for Drive
@@ -76,7 +80,14 @@ public class Robot extends TimedRobot {
     _leftSlave.setInverted(InvertType.FollowMaster);
     _rightSlave.setInverted(InvertType.FollowMaster);
     // start Compressor
-    Compressor.start();
+    compressor.start();
+
+
+    m_ShooterMotor1 = new CANSparkMax(leftDeviceID, MotorType.kBrushless);
+    m_ShooterMotor2 = new CANSparkMax(rightDeviceID, MotorType.kBrushless);
+
+    m_ShooterMotor1.restoreFactoryDefaults();
+    m_ShooterMotor2.restoreFactoryDefaults();
   
   }
 
@@ -190,12 +201,6 @@ public class Robot extends TimedRobot {
       Intake2.set(Value.kReverse);
     } else {
       Intake2.set(Value.kForward);
-    }
-    /*Shooter Pnuematics*/
-    if (_joy1.getRawButton(0)) {
-      Shooter.set(Value.kReverse);
-    } else {
-      Shooter.set(Value.kForward);
     }
   }
 
