@@ -118,8 +118,8 @@ public class Robot extends TimedRobot {
    * make sure to add them to the chooser code above as well.
    */
   @Override
-  public void autonomousInit() {
-
+  public void autonomousInit(){
+   startTime = Timer.getFPGATimestamp();
   }
 
   /**
@@ -127,6 +127,20 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    final double time = Timer.getFPGATimestamp();
+     /*after 10 seconds the robot drives forward*/
+    if (time - startTime > 10) {
+     _frontrightMotor.set(0.6);
+     _frontleftMotor.set(0.6);
+     _leftSlave.set(-0.6);
+     _rightSlave.set(-0.6);
+     /*after 14 seconds it stops*/
+    } else if (time - startTime > 14) {
+      _frontrightMotor.set(0);
+      _frontleftMotor.set(0);
+      _leftSlave.set(0);
+      _rightSlave.set(0);
+    }
   }
 
   /**
